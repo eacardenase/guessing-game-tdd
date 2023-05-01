@@ -1,6 +1,7 @@
 package com.eacardenase.game;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,12 +15,13 @@ public class GuessingGameTest {
     }
 
     @Test
+//    @RepeatedTest(10)
     public void testRandomNumberGeneration() {
         int[] randomNumberCount = new int[10]; // int default value is 0
         int randomCount = 0;
 
-        for (int i = 0; i < 100; i++) {
-            int randomNumber = game.getRandomNumber();
+        for (int i = 0; i < 60; i++) {
+            int randomNumber = new GuessingGame().getRandomNumber();
 
             randomNumberCount[randomNumber] = 1;
         }
