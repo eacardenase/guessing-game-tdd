@@ -1,12 +1,13 @@
 package com.eacardenase.game;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
+//import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GuessingGameTest {
 
+    public static final int GAME_RANDOMNESS_RETRIES = 60;
     private GuessingGame game;
 
     @BeforeEach
@@ -20,7 +21,7 @@ public class GuessingGameTest {
         int[] randomNumberCount = new int[10]; // int default value is 0
         int randomCount = 0;
 
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < GAME_RANDOMNESS_RETRIES; i++) {
             int randomNumber = new GuessingGame().getRandomNumber();
 
             randomNumberCount[randomNumber] = 1;
@@ -39,7 +40,7 @@ public class GuessingGameTest {
 
         String message = game.guess(randomNumber);
 
-        assertEquals("You got it", message);
+        assertEquals("You got it in 1 try!", message);
     }
 
     @Test
@@ -58,5 +59,41 @@ public class GuessingGameTest {
         String message = game.guess(randomNumber + 1);
 
         assertEquals("You didn't get it", message);
+    }
+
+    @Test
+    public void testFourWrongGuesses() {
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+
+        String message = game.guess(-3);
+
+        assertEquals("You didn't get it and you had four tries. Game over.", message);
+    }
+
+    @Test
+    public void testThreeWrongGuessesAndOneCorrect() {
+        int randomNumber = game.getRandomNumber();
+
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+
+        String message = game.guess(randomNumber);
+
+        assertEquals("You got it in 4 tries!", message);
+    }
+
+    @Test
+    public void testTwoWrongGuessesAndOneCorrect() {
+        int randomNumber = game.getRandomNumber();
+
+        game.guess(-3);
+        game.guess(-3);
+
+        String message = game.guess(randomNumber);
+
+        assertEquals("You got it in 3 tries!", message);
     }
 }
