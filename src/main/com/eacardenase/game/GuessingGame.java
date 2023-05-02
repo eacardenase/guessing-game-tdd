@@ -9,18 +9,24 @@ public class GuessingGame {
 
     public String guess(int guessNumber) {
         numberOfGuesses++;
+        String tryText = numberOfGuesses == 1 ? "try" : "tries";
+        String loseText = "You didn't get it - ";
+        String message;
 
         if (guessNumber == getRandomNumber()) {
-            String tryText = numberOfGuesses == 1 ? "try" : "tries";
-
-            return String.format("You got it in %d %s!", numberOfGuesses, tryText);
+            message = String.format("You got it in %d %s!", numberOfGuesses, tryText);
+        } else if (numberOfGuesses == 4) {
+            message = String.format("You didn't get it and you had %d %s. Game over.", numberOfGuesses, tryText);
+        } else if (numberOfGuesses > 4) {
+            message = "Sorry, you are limited to only 4 tries. Game over.";
+        } else {
+            message = (guessNumber < randomNumber) ?
+                    loseText + "you're too low" :
+                    loseText + "you're too high"
+            ;
         }
 
-        if (numberOfGuesses == 4) {
-            return "You didn't get it and you had four tries. Game over.";
-        }
-
-        return "You didn't get it";
+        return message;
     }
 
     public int getRandomNumber() {

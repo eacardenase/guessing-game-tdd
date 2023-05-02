@@ -49,7 +49,7 @@ public class GuessingGameTest {
 
         String message = game.guess(-randomNumber);
 
-        assertEquals("You didn't get it", message);
+        assertEquals("You didn't get it - you're too low", message);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class GuessingGameTest {
 
         String message = game.guess(randomNumber + 1);
 
-        assertEquals("You didn't get it", message);
+        assertEquals("You didn't get it - you're too high", message);
     }
 
     @Test
@@ -69,7 +69,24 @@ public class GuessingGameTest {
 
         String message = game.guess(-3);
 
-        assertEquals("You didn't get it and you had four tries. Game over.", message);
+        assertEquals("You didn't get it and you had 4 tries. Game over.", message);
+    }
+
+    @Test
+    public void testTenWrongGuesses() {
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+
+        String message = game.guess(-3);
+
+        assertEquals("Sorry, you are limited to only 4 tries. Game over.", message);
     }
 
     @Test
